@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "server_grades",
+  "version": "${version}",
+
+  "name": "ServerGradesMod",
+  "description": "",
+  "authors": [],
+  "contact": {},
+
+  "license": "All-Rights-Reserved",
+  "icon": "assets/server_grades/icon.png",
+
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+        "fr.gwengwen49.server_grades.ServerGradesMod"
+    ]
+  },
+
+  "mixins": [
+    "server_grades.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+        "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

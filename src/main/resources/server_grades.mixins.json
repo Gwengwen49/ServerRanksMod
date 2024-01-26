@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "fr.gwengwen49.server_grades.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ServerPlayerEntityMixin",
+    "PlayerListS2CPacketMixin"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
