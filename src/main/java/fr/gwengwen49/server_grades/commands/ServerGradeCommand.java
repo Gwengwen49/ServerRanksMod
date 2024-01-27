@@ -41,7 +41,16 @@ public class ServerGradeCommand {
                         .then(CommandManager.argument("player_name", GameProfileArgumentType.gameProfile())
                                 .then(CommandManager.argument("grade_name", StringArgumentType.word())
                                         .then(CommandManager.argument("priority", IntegerArgumentType.integer())
-                                                .executes(context -> executeRankPlayer(context.getSource(), context.getArgument("player_name", GameProfile.class), context.getArgument("grade_name", String.class), context.getArgument("priority", Integer.class))))))));
+                                                .executes(context -> {
+                                                    try {
+                                                        List<GameProfile> profiles = GameProfileArgumentType.getProfileArgument(context, "player_name").stream().toList();
+                                                        return executeRankPlayer(context.getSource(), profiles, context.getArgument("grade_name", String.class), context.getArgument("priority", Integer.class));
+                                                    }
+                                                    catch (Exception e){
+                                                        e.printStackTrace(System.out);
+                                                    }
+                                                    return 1;
+                                                }))))));
 
     }
 
@@ -69,15 +78,14 @@ public class ServerGradeCommand {
         return 1;
     }
 
-    private static int executeRankPlayer(ServerCommandSource source, GameProfile profile, String grade, int priority){
-        try {
+    private static int executeRankPlayer(ServerCommandSource source, List<GameProfile> profiles, String grade, int priority){
+            System.out.println("-1");
+            GameProfile profile = profiles.get(0);
+        System.out.println("0");
             ServerPlayerEntity player = source.getServer().getPlayerManager().getPlayer(profile.getName());
             PlayerGrades.rankPlayer(player, grade, priority);
-            source.getServer().getPlayerManager().sendToAll(new PlayerListS2CPacket(EnumSet.of(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, PlayerListS2CPacket.Action.UPDATE_LISTED), source.getServer().getPlayerManager().getPlayerList()));
             System.out.println("1");
-        }catch (Exception e){
-            e.printStackTrace(System.out);
-        }
+            source.getServer().getPlayerManager().sendToAll(new PlayerListS2CPacket(EnumSet.of(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, PlayerListS2CPacket.Action.UPDATE_LISTED), source.getServer().getPlayerManager().getPlayerList()));
         return 1;
     }
 }

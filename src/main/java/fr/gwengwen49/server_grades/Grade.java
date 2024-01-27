@@ -4,8 +4,10 @@ import com.google.common.collect.BiMap;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
+import org.objectweb.asm.ClassVisitor;
 
 import java.awt.*;
 import java.io.*;
@@ -97,7 +99,7 @@ public class Grade {
 
     public static Text toDisplayable(String playerName){
         Grade grade = PlayerGrades.getHightestGrade(playerName);
-        return MutableText.of(PlainTextContent.of(grade.displayName)).setStyle(Style.EMPTY.withColor(grade.getColor()))
+        return MutableText.of(PlainTextContent.of( "§f[§r"+grade.displayName+"§f]")).setStyle(Style.EMPTY.withColor(grade.getColor()).withBold(true))
                 .append(MutableText.of(PlainTextContent.of(playerName)).setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.WHITE))));
     }
 
